@@ -1,0 +1,38 @@
+{
+  "name": "tunangn-react-modal",
+  "version": "1.0.0",
+  "description": "Use to show message by using Dialog, snackbar or to show side in React",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:rollup": "rimraf dist && rollup -c --bundleConfigAsCjs"
+  },
+  "keywords": [
+    "modal",
+    "dialog",
+    "side",
+    "snackbar",
+    "react-modal",
+    "react-dialog",
+    "react-side",
+    "react-snackbar",
+    "message",
+    "box"
+  ],
+  "author": "Nguyen Anh Tuan",
+  "license": "MIT",
+  "devDependencies": {
+    "@rollup/plugin-node-resolve": "^15.1.0",
+    "@rollup/plugin-typescript": "^11.1.2",
+    "rimraf": "^5.0.1",
+    "rollup-plugin-dts": "^5.3.0",
+    "rollup-plugin-esbuild": "^5.0.0",
+    "ts-loader": "^9.4.4",
+    "tslib": "^2.6.0",
+    "typescript": "^5.1.6"
+  },
+  "peerDependencies": {
+    "react": ">=16.14.0"
+  }
+}
