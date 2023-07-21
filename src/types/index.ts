@@ -9,7 +9,8 @@ export interface RMAddItemOptions {
   /**
    * Type of modal item.
    */
-  type: string
+  type: MITypes,
+  element?: () => JSX.Element
 }
 
 export interface ModalContainerProps {
@@ -17,9 +18,6 @@ export interface ModalContainerProps {
    * Class name of modal's container.
    */
   className: string,
-  items: {[key: string]: {
-    type: MITypes,
-    item: ModalItem<JSX.Element>
-  }},
+  items: {[key: string]: RMAddItemOptions},
   modalManager: ReactModal
 }

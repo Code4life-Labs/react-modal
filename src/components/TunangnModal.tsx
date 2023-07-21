@@ -56,7 +56,11 @@ export default function TunangnModal(props: ModalContainerProps) {
 
     // Add and Create Modal Item
     for(let itemName of itemNames) {
-      props.modalManager.addItem({ name: itemName, type: props.items[itemName].type });
+      props.modalManager.addItem({
+        name: itemName,
+        type: props.items[itemName].type,
+        element: props.items[itemName].element
+      });
     }
 
     props.modalManager.modal.container = modalContainerRef.current!;
