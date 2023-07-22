@@ -24,7 +24,7 @@ enum ShapeStyleNameEnum {
   RoundedTopBottomRight12 = "RoundedTopBottomRight12"
 }
 
-export const ShapeStyles: {[key in ShapeStyleNameEnum]: Partial<CSSStyleDeclaration>} = {
+export const ShapeStyles: {[key in ShapeStyleNameEnum]: React.CSSProperties} = {
   [ShapeStyleNameEnum.Circle]: {
     borderRadius: "50%",
     aspectRatio: "1",

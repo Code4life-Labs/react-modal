@@ -5,7 +5,7 @@ enum BoxShadowStyleNameEnum {
   BShadow4 = "BShadow4"
 }
 
-export const BoxShadowStyles: {[key in BoxShadowStyleNameEnum]: Partial<CSSStyleDeclaration>} = {
+export const BoxShadowStyles: {[key in BoxShadowStyleNameEnum]: React.CSSProperties} = {
   [BoxShadowStyleNameEnum.BShadow1]: {
     boxShadow: `rgba(100, 100, 111, 0.2) 0px 7px 29px 0px`
   },

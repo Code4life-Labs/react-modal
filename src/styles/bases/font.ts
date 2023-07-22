@@ -18,7 +18,7 @@ enum FontStyleNameEnum {
   FwBlack = "FwBlack"
 }
 
-export const FontStyles: {[key in FontStyleNameEnum]: Partial<CSSStyleDeclaration>} = {
+export const FontStyles: {[key in FontStyleNameEnum]: React.CSSProperties} = {
   [FontStyleNameEnum.Fs0]: {
     fontSize: `${FontValues.fontSize * 2}rem`
   },

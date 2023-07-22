@@ -1,5 +1,10 @@
-import { ModalItem, MITypes } from "tunangn-modal";
+import { MITypes, MIResult, PublicModalItemProps } from "tunangn-modal";
 import { ReactModal } from "../classes/ReactModal";
+
+export interface ModalItemProps {
+  close: (result: MIResult) => void,
+  item: PublicModalItemProps
+}
 
 export interface RMAddItemOptions {
   /**
@@ -10,14 +15,44 @@ export interface RMAddItemOptions {
    * Type of modal item.
    */
   type: MITypes,
-  element?: () => JSX.Element
+  /**
+   * Function component of modal item.
+   * @returns 
+   */
+  element?: (props: ModalItemProps) => JSX.Element
 }
 
-export interface ModalContainerProps {
+export enum MIUIStyleNameEnum {
+  Container = "Container",
+  Header = "Header",
+  Body = "Body",
+  Footer = "Footer"
+}
+
+export interface WrappedModalContainerProps {
   /**
    * Class name of modal's container.
    */
-  className: string,
-  items: {[key: string]: RMAddItemOptions},
+  className?: string,
+  /**
+   * List of Modal Item use to assign.
+   */
+  items: {[key: string]: {
+    /**
+     * Type of modal item.
+     */
+    type: MITypes,
+    /**
+     * Function component of modal item.
+     * @returns 
+     */
+    element?: (props: ModalItemProps) => JSX.Element
+  }},
+}
+
+export interface ModalContainerProps extends WrappedModalContainerProps {
+  /**
+   * Instance of React Modal.
+   */
   modalManager: ReactModal
 }

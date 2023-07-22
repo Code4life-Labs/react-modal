@@ -1,9 +1,11 @@
-import React from "react";
+import * as React from "react";
 
 import { ReactModal } from "../classes/ReactModal";
 import TunangnModal from "../components/TunangnModal";
 
-import { ModalContainerProps } from "../types";
+import {
+  WrappedModalContainerProps
+} from "../types";
 
 /**
  * Use to create a Modal and open Modal Item function.
@@ -12,9 +14,21 @@ import { ModalContainerProps } from "../types";
  * @returns 
  */
 export function createModal() {
-  const __ = new ReactModal();
+  /**
+   * New Instance of React Modal.
+   */
+  const _reactModalInstance = new ReactModal();
+  /**
+   * Place this component in `App.jsx`. It's injected with instance of React Modal.
+   * 
+   * @param props 
+   * @returns 
+   */
+  const Component = function(props: WrappedModalContainerProps) {
+    return <TunangnModal {...props} modalManager={_reactModalInstance} />
+  };
 
-  return function(props: ModalContainerProps) {
-    return <TunangnModal {...props} modalManager={__} />
-  }
+
+  const open = _reactModalInstance.open;
+  return [Component, open] as const;
 }

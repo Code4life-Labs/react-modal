@@ -5,7 +5,7 @@ import { ShapeStyles } from "./bases/shape";
 
 import { MIUIStyleNameEnum } from "../types";
 
-export const SideComponentsStyle: {[key in MIUIStyleNameEnum]: Partial<CSSStyleDeclaration>} = {
+export const SideComponentsStyle: {[key in MIUIStyleNameEnum]: React.CSSProperties} = {
   [MIUIStyleNameEnum.Container]: {
     pointerEvents: "auto",
     position: "absolute",

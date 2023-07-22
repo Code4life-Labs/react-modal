@@ -73,7 +73,7 @@ enum SpacingStyleNameEnum {
   Pb4 = "Pb4"
 }
 
-export const SpacingStyles: {[key in SpacingStyleNameEnum]: Partial<CSSStyleDeclaration>} = {
+export const SpacingStyles: {[key in SpacingStyleNameEnum]: React.CSSProperties} = {
   [SpacingStyleNameEnum.M0]: {
     margin: "0"
   },

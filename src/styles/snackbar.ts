@@ -5,7 +5,7 @@ import { ShapeStyles } from "./bases/shape";
 
 import { MIUIStyleNameEnum } from "../types";
 
-export const SnackbarComponentsStyle: {[key in MIUIStyleNameEnum]: Partial<CSSStyleDeclaration>} = {
+export const SnackbarComponentsStyle: {[key in MIUIStyleNameEnum]: React.CSSProperties} = {
   [MIUIStyleNameEnum.Container]: {
     pointerEvents: "auto",
     position: "absolute",
@@ -51,7 +51,7 @@ export const SnackbarComponentsStyle: {[key in MIUIStyleNameEnum]: Partial<CSSSt
 
 type SnackBarPositions = "Top" | "TopRight" | "TopLeft" | "Bottom" | "BottomRight" | "BottomLeft";
 
-export const SnackbarPositionStyles: {[key in SnackBarPositions]: Partial<CSSStyleDeclaration>} = {
+export const SnackbarPositionStyles: {[key in SnackBarPositions]: React.CSSProperties} = {
   Top: {
     top: "0",
     left: "50%",

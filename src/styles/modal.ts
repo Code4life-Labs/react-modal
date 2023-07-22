@@ -6,7 +6,7 @@ enum ModalStyleNameEnum {
   TranparentBlackBG = "TranparentBlackBG"
 }
 
-export const ModalStyles: {[key in ModalStyleNameEnum]: Partial<CSSStyleDeclaration>} = {
+export const ModalStyles: {[key in ModalStyleNameEnum]: React.CSSProperties} = {
   [ModalStyleNameEnum.Default]: {
     position: "fixed",
     display: "none",

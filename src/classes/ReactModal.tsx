@@ -3,10 +3,13 @@
  * Went React Modal Object is created, Somethings will be reacted:
  * - A context:
  */
-import React from 'react';
+import * as React from 'react';
+
 import {
   Modal,
-  ModalItem,
+  Dialog,
+  Side,
+  Snackbar,
   ExceptionUtils,
   MIUIEBuilder,
   MIResult,
@@ -14,10 +17,13 @@ import {
   MIMOpenRemoveOptions
 } from "tunangn-modal";
 
-import ModalContainer from '../components/TunangnModal';
-import Dialog from '../components/Dialog';
-import Snackbar from '../components/Snackbar';
-import Side from '../components/Side';
+import DefaultDialog from '../components/Dialog';
+import DefaultSnackbar from '../components/Snackbar';
+import DefaultSide from '../components/Side';
+
+import { ElementUtils } from '../utils/element';
+
+import { ModalStyles } from '../styles/modal';
 
 import { RMAddItemOptions } from '../types';
 
@@ -46,7 +52,7 @@ export class ReactModal {
     try {
       // IMPORTANT
       MIUIEBuilder.setCompound((MIElement) => {
-
+        return MIElement;
       });
 
       this._isInit = true;
@@ -64,10 +70,39 @@ export class ReactModal {
    * @param name Name of item want to open
    * @returns 
    */
-  open(name: string) {
+  open(name: string, data?: any) {
     try {
-      let item = this.modal.getItem(name);
-      return item?.open(this._append, this._remove);
+      let that = this;
+      return new Promise<MIResult>((resolve) => {
+        setTimeout(() => {
+          let item = that.modal.getItem(name)!;
+          // Set data for item.
+          item.setData(data);
+
+          // Show modal container first
+          that.modal.container!.style.display = "block";
+
+          switch(item.type) {
+            case "dialog": {
+              ElementUtils.addStyle(that.modal.container!, ModalStyles.TranparentBlackBG as Partial<CSSStyleDeclaration>);
+              break;
+            };
+
+            case "side": {
+              ElementUtils.addStyle(that.modal.container!, ModalStyles.TranparentBlackBG as Partial<CSSStyleDeclaration>);
+              break;
+            };
+
+            case "snack-bar": {
+              that.modal.container!.style.pointerEvents = "none";
+              break;
+            }
+          }
+
+          item.open(that._append, that._remove)
+          .then(result => resolve(result));
+        }, 0);
+      });
     } catch (error: any) {
       console.error(ExceptionUtils.getException("[Error - ReactModal method: _init]: " + error.message));
       let result: MIResult = {
@@ -80,10 +115,21 @@ export class ReactModal {
 
   addItem(options: RMAddItemOptions) {
     try {
+      let item;
       switch(options.type) {
-        
+        case "dialog": {
+          item = new Dialog<JSX.Element>({
+            name: options.name,
+            build: function(builder) {
+              builder.buildCompoment("container", (close, item) => {
+                return options.element? options.element({close, item}) : <DefaultDialog close={close} item={item} />
+              })
+              return true;
+            }
+          });
+        }
       }
-
+      this.modal.registerItem(options.name, item!);
       return true;
     } catch (error: any) {
       console.error(ExceptionUtils.getException("[Error - ReactModal method: _init]: " + error.message));
