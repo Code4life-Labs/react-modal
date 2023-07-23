@@ -10,14 +10,21 @@ import { ModalStyles } from "../styles/modal";
 import { ModalContainerProps } from "../types";
 
 /**
+ * This is default items of modal.
+ */
+const _DEFAULT_ITEMS_ = {
+
+}
+
+/**
+ * __IMPORTANT__
+ * 
  * Default ModalContainer Component.
  * @param props 
  * @returns 
  */
 export default function TunangnModal(props: ModalContainerProps) {
   if(!props.modalManager) throw Error("Modal manager is required!");
-
-  console.log("Create modal...");
 
   const [items, setItems] = React.useState<{[key: string]: JSX.Element}>({});
   const modalContainerRef = React.useRef<HTMLDivElement>(null);
@@ -58,6 +65,8 @@ export default function TunangnModal(props: ModalContainerProps) {
       setItems(prevState => {
         delete prevState[options.tempUID];
         let itemNames = Object.keys(prevState);
+
+        // If there aren't items left, reset style of modal container element.
         if(itemNames.length == 0) {
           props.modalManager.modal.container!.style.backgroundColor = "";
           props.modalManager.modal.container!.style.pointerEvents = "";
@@ -67,25 +76,19 @@ export default function TunangnModal(props: ModalContainerProps) {
       });
     });
 
-    console.log("Items: ", props.items);
-    console.log("Item names: ", itemNames);
-
     // Add and Create Modal Item
     for(let itemName of itemNames) {
-      console.log("Add item: ", itemName);
+      console.log("Assigned Item: ", props.items[itemName]);
+
       props.modalManager.addItem({
         name: itemName,
         type: props.items[itemName].type,
         element: props.items[itemName].element
       });
     }
-    console.log("Modal: ", props.modalManager.modal);
+
     props.modalManager.modal.container = modalContainerRef.current!;
-
-    console.log("Create modal done.");
   }, []);
-
-  console.log("Items: ", items);
 
   return React.useMemo(() => (
     <div

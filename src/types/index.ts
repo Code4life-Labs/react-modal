@@ -56,3 +56,15 @@ export interface ModalContainerProps extends WrappedModalContainerProps {
    */
   modalManager: ReactModal
 }
+
+export interface SideReceivedData {
+  title?: string | JSX.Element,
+  content?: string | JSX.Element
+}
+
+export interface DialogReceivedData {
+  title?: string | JSX.Element,
+  content?: string | JSX.Element,
+  cancelBtnLabel?: string | JSX.Element | null,
+  agreeBtnLabel?: string | JSX.Element | null
+}

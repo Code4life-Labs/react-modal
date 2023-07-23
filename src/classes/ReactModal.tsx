@@ -18,8 +18,8 @@ import {
 } from "tunangn-modal";
 
 import DefaultDialog from '../components/Dialog';
-import DefaultSnackbar from '../components/Snackbar';
 import DefaultSide from '../components/Side';
+import DefaultSnackbar from '../components/Snackbar';
 
 import { ElementUtils } from '../utils/element';
 
@@ -31,6 +31,7 @@ export class ReactModal {
   modal!: Modal<HTMLDivElement>;
 
   private _isInit!: boolean;
+  static isTunangnModalCreated: boolean = false;
 
   /**
    * Append and Remove function
@@ -56,6 +57,7 @@ export class ReactModal {
       });
 
       this._isInit = true;
+      if(!ReactModal.isTunangnModalCreated) ReactModal.isTunangnModalCreated = true;
       return true;
     } catch (error: any) {
       console.error(ExceptionUtils.getException("[Error - ReactModal method: _init]: " + error.message));
@@ -113,6 +115,15 @@ export class ReactModal {
     }
   }
 
+  /**
+   * Use to add new modal item to modal manager. `options.name` and `options.type` are required.
+   * Name of Modal Item is the key that is assigned in `items` props of Modal Component, and type is
+   * assigned here.
+   * 
+   * @method
+   * @param options 
+   * @returns 
+   */
   addItem(options: RMAddItemOptions) {
     try {
       let item;
@@ -127,6 +138,33 @@ export class ReactModal {
               return true;
             }
           });
+          break;
+        };
+
+        case "side": {
+          item = new Side<JSX.Element>({
+            name: options.name,
+            build: function(builder) {
+              builder.buildCompoment("container", (close, item) => {
+                return options.element? options.element({close, item}) : <DefaultSide close={close} item={item} />
+              })
+              return true;
+            }
+          });
+          break;
+        };
+
+        case "snack-bar": {
+          item = new Snackbar<JSX.Element>({
+            name: options.name,
+            build: function(builder) {
+              builder.buildCompoment("container", (close, item) => {
+                return options.element? options.element({close, item}) : <DefaultSnackbar close={close} item={item} />
+              })
+              return true;
+            }
+          });
+          break;
         }
       }
       this.modal.registerItem(options.name, item!);
@@ -137,19 +175,23 @@ export class ReactModal {
     }
   }
 
+  /**
+   * Use to set append function.
+   * 
+   * @method
+   * @param callBack 
+   */
   setAppendFn(callBack: (options: MIMOpenAppendOptions) => any) {
     this._append = callBack
   }
 
-  getAppendFn() {
-    return this._append;
-  }
-
+  /**
+   * Use to set remove function.
+   * 
+   * @method
+   * @param callBack 
+   */
   setRemoveFn(callBack: (options: MIMOpenRemoveOptions) => any) {
     this._remove = callBack;
-  }
-
-  getRemoveFn() {
-    return this._remove;
   }
 }
