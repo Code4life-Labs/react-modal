@@ -42,7 +42,7 @@ export const SideComponentsStyle: {[key in MIUIStyleNameEnum]: React.CSSProperti
   }
 };
 
-export const SidePlaceOnStyles: {[key in "Left" | "Right"]: Partial<CSSStyleDeclaration>} = {
+export const SidePlaceOnStyles: {[key in "Left" | "Right"]: React.CSSProperties} = {
   Left: {
     top: "0",
     left: "0"

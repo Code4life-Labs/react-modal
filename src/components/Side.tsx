@@ -1,39 +1,66 @@
 // Default Side React Component
 import * as React from 'react';
 
-import { SideComponentsStyle } from '../styles/side';
+import { MoveAnim, MoveFrom } from '../animations/move';
+
+import { ElementUtils } from '../utils/element';
+
+import { SideComponentsStyle, SidePlaceOnStyles } from '../styles/side';
 import { ButtonStyles } from '../styles/bases/button';
 import { FontStyles } from '../styles/bases/font';
 import { SpacingStyles } from '../styles/bases/spacing';
 
 import {
   ModalItemProps,
-  SideReceivedData
+  DefaultSideReceivedData
 } from '../types'
 
 export default function Side(props: ModalItemProps) {
-  const data: SideReceivedData = props.item.getData();
+  const data: DefaultSideReceivedData = props.item.getData();
+  const sideRef = React.useRef<HTMLDivElement>(null);
 
-  const styles = React.useRef({
+  let moveFrom: MoveFrom;
+  let placeOnStyle;
+
+  switch(props.item.placeOn) {
+    case "right": {
+      moveFrom = "Right";
+      placeOnStyle = SidePlaceOnStyles.Right;
+      break;
+    };
+
+    default: {
+      moveFrom = "Left";
+      placeOnStyle = SidePlaceOnStyles.Left;
+      break;
+    }
+  }
+
+  const styles = {
     closeBtn: {
       ...ButtonStyles.Btn,
       ...ButtonStyles.BtnClose
     },
-    agreeBtn: {
-      ...ButtonStyles.Btn,
-      ...ButtonStyles.BtnBlue,
-      ...ButtonStyles.BtnBorder
-    },
-    cancelBtn: {
-      ...ButtonStyles.Btn,
-      ...ButtonStyles.BtnTransparent20,
-      ...SpacingStyles.Me1,
-      ...ButtonStyles.BtnBorder
-    }
-  });
+    container: ElementUtils.mergeStyles(
+      SideComponentsStyle.Container as Partial<CSSStyleDeclaration>,
+      placeOnStyle as Partial<CSSStyleDeclaration>
+    )
+  };
+
+  /**
+   * RUN ONE TIME
+   * After side is added, run animation
+   */
+  React.useEffect(() => {
+    MoveAnim.From(sideRef.current!, undefined, moveFrom);
+  }, []);
 
   return (
-    <div className="tunangn-side" style={SideComponentsStyle.Container}>
+    <div
+      className="tunangn-side"
+      style={styles.container}
+      ref={sideRef}
+    >
       {/* Header of Side */}
       <div className="tunangn-side-header" style={SideComponentsStyle.Header}>
         {
@@ -43,7 +70,7 @@ export default function Side(props: ModalItemProps) {
             ? data.title
             : <p style={FontStyles.FwBold}>Tunangn Side</p>
         }
-        <button style={styles.current.closeBtn} onClick={() => props.close({ isAgree: false })}></button>
+        <button style={styles.closeBtn} onClick={() => props.close({ isAgree: false })}></button>
       </div>
       {/* Body of Side */}
       <div className="tunangn-side-body" style={SideComponentsStyle.Body}>

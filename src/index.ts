@@ -8,18 +8,32 @@ import {
 
 // Import Types
 import {
-  ModalContainerProps
+  ModalContainerProps,
+  DefaultDialogReceivedData,
+  DefaultSideReceivedData,
+  DefaultSnackbarReceivedData,
+  ModalItemProps
 } from "./types";
 
 // Import default functions and default TunangnModal
 import {
   TunangnModal,
-  dialog
+  openTunangnMI,
+  dialog,
+  side,
+  snackbar
 } from './items'
 
 export {
   createModal,
-  dialog,
   TunangnModal,
-  ModalContainerProps
+  openTunangnMI,
+  dialog,
+  side,
+  snackbar,
+  ModalContainerProps,
+  DefaultDialogReceivedData,
+  DefaultSideReceivedData,
+  DefaultSnackbarReceivedData,
+  ModalItemProps
 }

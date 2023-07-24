@@ -4,7 +4,7 @@ const defaultOptions: KeyframeAnimationOptions = {
   easing: "cubic-bezier(0.33, 1, 0.68, 1)"
 }
 
-type MoveFrom = "Left" | "Right" | "Top" | "Bottom";
+export type MoveFrom = "Left" | "Right" | "Top" | "Bottom";
 
 function setDefaultOptions(options?: KeyframeAnimationOptions) {
   if(!options) options = {...defaultOptions};
@@ -79,5 +79,5 @@ function From(
 };
 
 export const MoveAnim = {
-  From,
+  From
 }

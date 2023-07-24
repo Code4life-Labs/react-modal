@@ -1,4 +1,10 @@
-import { MITypes, MIResult, PublicModalItemProps } from "tunangn-modal";
+import {
+  MITypes,
+  MIResult,
+  PublicModalItemProps,
+  SidePlaces,
+  SnackbarPositions
+} from "tunangn-modal";
 import { ReactModal } from "../classes/ReactModal";
 
 export interface ModalItemProps {
@@ -15,6 +21,21 @@ export interface RMAddItemOptions {
    * Type of modal item.
    */
   type: MITypes,
+  /**
+   * Only for Side.
+   * Where does side place?
+   */
+  placeOn?: SidePlaces,
+  /**
+   * Only for Snackbar.
+   * Position of snackbar
+   */
+  position?: SnackbarPositions,
+  /**
+   * Only for Snackbar.
+   * How long does snackbar last?
+   */
+  duration?: number,
   /**
    * Function component of modal item.
    * @returns 
@@ -37,11 +58,26 @@ export interface WrappedModalContainerProps {
   /**
    * List of Modal Item use to assign.
    */
-  items: {[key: string]: {
+  items?: {[key: string]: {
     /**
      * Type of modal item.
      */
     type: MITypes,
+    /**
+     * Only for Side.
+     * Where does side place?
+     */
+    placeOn?: SidePlaces,
+    /**
+     * Only for Snackbar.
+     * Position of snackbar
+     */
+    position?: SnackbarPositions,
+    /**
+     * Only for Snackbar.
+     * How long does snackbar last?
+     */
+    duration?: number,
     /**
      * Function component of modal item.
      * @returns 
@@ -57,14 +93,21 @@ export interface ModalContainerProps extends WrappedModalContainerProps {
   modalManager: ReactModal
 }
 
-export interface SideReceivedData {
-  title?: string | JSX.Element,
-  content?: string | JSX.Element
-}
-
-export interface DialogReceivedData {
+interface DefaultMIReceivedData {
   title?: string | JSX.Element,
   content?: string | JSX.Element,
+}
+
+export interface DefaultDialogReceivedData extends DefaultMIReceivedData {
   cancelBtnLabel?: string | JSX.Element | null,
   agreeBtnLabel?: string | JSX.Element | null
+}
+
+export interface DefaultSideReceivedData extends DefaultMIReceivedData {}
+
+export interface DefaultSnackbarReceivedData extends DefaultMIReceivedData {
+  /**
+   * Color for Snackbar
+   */
+  color?: "info" | "success" | "warning" | "error" | string
 }

@@ -144,6 +144,7 @@ export class ReactModal {
         case "side": {
           item = new Side<JSX.Element>({
             name: options.name,
+            placeOn: options.placeOn,
             build: function(builder) {
               builder.buildCompoment("container", (close, item) => {
                 return options.element? options.element({close, item}) : <DefaultSide close={close} item={item} />
@@ -157,6 +158,7 @@ export class ReactModal {
         case "snack-bar": {
           item = new Snackbar<JSX.Element>({
             name: options.name,
+            position: options.position,
             build: function(builder) {
               builder.buildCompoment("container", (close, item) => {
                 return options.element? options.element({close, item}) : <DefaultSnackbar close={close} item={item} />

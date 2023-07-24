@@ -8,7 +8,7 @@ import { SpacingStyles } from '../styles/bases/spacing';
 
 import {
   ModalItemProps,
-  DialogReceivedData
+  DefaultDialogReceivedData
 } from '../types';
 
 /**
@@ -17,7 +17,7 @@ import {
  * @returns 
  */
 export default function Dialog(props: ModalItemProps) {
-  const data: DialogReceivedData = props.item.getData();
+  const data: DefaultDialogReceivedData = props.item.getData();
 
   const styles = React.useRef({
     closeBtn: {
