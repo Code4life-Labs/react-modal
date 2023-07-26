@@ -159,6 +159,7 @@ export class ReactModal {
           item = new Snackbar<JSX.Element>({
             name: options.name,
             position: options.position,
+            duration: options.duration,
             build: function(builder) {
               builder.buildCompoment("container", (close, item) => {
                 return options.element? options.element({close, item}) : <DefaultSnackbar close={close} item={item} />

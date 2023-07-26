@@ -1,6 +1,8 @@
 import { ReactModal } from "./classes/ReactModal";
 import { createModal } from "./creators/createModal";
 
+import { MIResult } from "tunangn-modal";
+
 import {
   DEFAULT_DIALOG_NAME,
   DEFAULT_SIDE_NAME,
@@ -21,7 +23,7 @@ const [TunangnModal, openTunangnMI] = createModal();
  * @param options 
  */
 function dialog(data: DefaultDialogReceivedData) {
-  if(!ReactModal.isTunangnModalCreated) return Promise.resolve(false);
+  if(!ReactModal.isTunangnModalCreated) return Promise.resolve<MIResult>({ isAgree: false });
   return openTunangnMI(DEFAULT_DIALOG_NAME, data);
 }
 
@@ -30,7 +32,7 @@ function dialog(data: DefaultDialogReceivedData) {
  * @param options 
  */
 function side(data: DefaultSideReceivedData) {
-  if(!ReactModal.isTunangnModalCreated) return Promise.resolve(false);
+  if(!ReactModal.isTunangnModalCreated) return Promise.resolve<MIResult>({ isAgree: false });
   return openTunangnMI(DEFAULT_SIDE_NAME, data);
 }
 
@@ -39,7 +41,7 @@ function side(data: DefaultSideReceivedData) {
  * @param options 
  */
 function snackbar(data: DefaultSnackbarReceivedData) {
-  if(!ReactModal.isTunangnModalCreated) return Promise.resolve(false);
+  if(!ReactModal.isTunangnModalCreated) return Promise.resolve<MIResult>({ isAgree: false });
   return openTunangnMI(DEFAULT_SNACKBAR_NAME, data);
 }
 

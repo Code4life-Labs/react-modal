@@ -50,7 +50,12 @@ export default function TunangnModal(props: ModalContainerProps) {
   const [items, setItems] = React.useState<
     {[key: string]: {
       element: JSX.Element,
-      duration?: number,
+      attributes: {
+        type: MITypes,
+        duration?: number,
+        placeOn?: SidePlaces,
+        position?: SnackbarPositions
+      },
       close: (ressult: MIResult) => void
     }}
   >({});
@@ -63,7 +68,7 @@ export default function TunangnModal(props: ModalContainerProps) {
     /**
      * Style of Modal container
      */
-    style: {...ModalStyles.Default, ...ModalStyles.TranparentBlackBG},
+    style: ModalStyles.Default,
     /**
      * Previous length of items in modal container.
      */
@@ -90,9 +95,18 @@ export default function TunangnModal(props: ModalContainerProps) {
       setItems(prevState => {
         console.log("Open: ", options.tempUID);
         console.log("Its info: ", options);
-        prevState[options.tempUID] = { 
+        let attributes: any = {
+          type: options._ItemAttributes.type
+        };
+
+        // Add specific attributes
+        if(options._ItemAttributes.duration) attributes.duration = options._ItemAttributes.duration;
+        if(options._ItemAttributes.placeOn) attributes.placeOn = options._ItemAttributes.placeOn;
+        if(options._ItemAttributes.position) attributes.position = options._ItemAttributes.position;
+
+        prevState[options.tempUID] = {
           element: options.MIUIElement,
-          duration: options._ItemAttributes.duration,
+          attributes: attributes,
           close: options._ItemActions.close
         };
         return {...prevState};
@@ -103,13 +117,20 @@ export default function TunangnModal(props: ModalContainerProps) {
     props.modalManager.setRemoveFn((options: MIMOpenRemoveOptions) => {
       setItems(prevState => {
         delete prevState[options.tempUID];
-        let itemNames = Object.keys(prevState);
+        let itemUIDs = Object.keys(prevState);
 
         // If there aren't items left, reset style of modal container element.
-        if(itemNames.length == 0) {
+        if(itemUIDs.length === 0) {
           props.modalManager.modal.container!.style.backgroundColor = "";
           props.modalManager.modal.container!.style.pointerEvents = "";
           props.modalManager.modal.container!.style.display = "none";
+        }
+
+        /**
+         * If there aren't any items left but snackbar, remove background.
+         */
+        if(itemUIDs.every(name => name.startsWith("snack-bar"))) {
+          props.modalManager.modal.container!.style.backgroundColor = "";
         }
         return {...prevState};
       });
@@ -125,6 +146,7 @@ export default function TunangnModal(props: ModalContainerProps) {
         placeOn: itemOptions.placeOn,
         position: itemOptions.position,
         duration: itemOptions.duration,
+        canAutoClose: itemOptions.canAutoClose,
         element: itemOptions.element
       });
     }
@@ -143,14 +165,15 @@ export default function TunangnModal(props: ModalContainerProps) {
     // If N < currentItemsLength, perform some actions.
     // That means a new item actually added.
     if(modalData.current.N < currentItemsLength) {
-      // If item has `duration`, add setTimeout to close.
       let lastIndex = miuiElementKeys.length - 1;
       let lastItem = items[miuiElementKeys[lastIndex]];
-      if(lastItem.duration) {
+
+      // If item has `duration`, add setTimeout to close.
+      if(lastItem.attributes.duration) {
         setTimeout(() => {
           // Close item after a period time
           lastItem.close({ isAgree: false });
-        },lastItem.duration);
+        }, lastItem.attributes.duration);
       };
       console.log("New Item Added!!!");
     }

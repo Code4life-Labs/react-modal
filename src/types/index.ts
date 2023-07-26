@@ -12,35 +12,47 @@ export interface ModalItemProps {
   item: PublicModalItemProps
 }
 
-export interface RMAddItemOptions {
-  /**
-   * Name of modal item.
-   */
-  name: string,
+interface CreateItemOptions {
   /**
    * Type of modal item.
    */
   type: MITypes,
   /**
-   * Only for Side.
-   * Where does side place?
+   * __Only for Side__
+   * 
+   * Where is side placed?
    */
   placeOn?: SidePlaces,
   /**
-   * Only for Snackbar.
-   * Position of snackbar
+   * __Only for Snackbar__
+   * 
+   * What is position of snackbar?
    */
   position?: SnackbarPositions,
   /**
-   * Only for Snackbar.
+   * __Only for Snackbar__
+   * 
    * How long does snackbar last?
    */
   duration?: number,
+  /**
+   * __Only for Snackbar__
+   * 
+   * Can snackbar close itself after a period time? `duration` will not work if this property is set.
+   */
+  canAutoClose?: boolean,
   /**
    * Function component of modal item.
    * @returns 
    */
   element?: (props: ModalItemProps) => JSX.Element
+}
+
+export interface RMAddItemOptions extends CreateItemOptions {
+  /**
+   * Name of modal item.
+   */
+  name: string
 }
 
 export enum MIUIStyleNameEnum {
@@ -58,32 +70,7 @@ export interface WrappedModalContainerProps {
   /**
    * List of Modal Item use to assign.
    */
-  items?: {[key: string]: {
-    /**
-     * Type of modal item.
-     */
-    type: MITypes,
-    /**
-     * Only for Side.
-     * Where does side place?
-     */
-    placeOn?: SidePlaces,
-    /**
-     * Only for Snackbar.
-     * Position of snackbar
-     */
-    position?: SnackbarPositions,
-    /**
-     * Only for Snackbar.
-     * How long does snackbar last?
-     */
-    duration?: number,
-    /**
-     * Function component of modal item.
-     * @returns 
-     */
-    element?: (props: ModalItemProps) => JSX.Element
-  }},
+  items?: {[key: string]: CreateItemOptions},
 }
 
 export interface ModalContainerProps extends WrappedModalContainerProps {

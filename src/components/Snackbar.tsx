@@ -1,71 +1,28 @@
 // Default Snackbar React Component
 import * as React from 'react';
 
-import { SnackbarComponentsStyle, SnackbarPositionStyles } from '../styles/snackbar';
+import { SnackbarUtils } from '../utils/snackbar';
+import { ElementUtils } from '../utils/element';
+
+import { SnackbarComponentsStyle } from '../styles/snackbar';
 import { ButtonStyles } from '../styles/bases/button';
 import { FontStyles } from '../styles/bases/font';
-import { SpacingStyles } from '../styles/bases/spacing';
 import { ColorValues } from '../styles/bases/variables';
 
 import { MoveAnim, MoveFrom } from '../animations/move';
 
-import { ElementUtils } from '../utils/element';
 
-import { ModalItemProps, DefaultSnackbarReceivedData } from '../types'
+import { ModalItemProps, DefaultSnackbarReceivedData } from '../types';
 
 export default function Snackbar(props: ModalItemProps) {
   const data: DefaultSnackbarReceivedData = props.item.getData();
   const snackbarRef = React.useRef<HTMLDivElement>(null);
 
-  let positionStyle;
-  let moveFrom: MoveFrom;
-  let keyFrames: any[];
-
-  switch(props.item.position) {
-    case "top": {
-      keyFrames = [
-        { transform: "translate(-50%, -100%)" },
-        { transform: "translate(-50%, 0)" }
-      ];
-      positionStyle = SnackbarPositionStyles.Top;
-      break;
-    };
-
-    case "top-left": {
-      positionStyle = SnackbarPositionStyles.TopLeft;
-      break;
-    };
-
-    case "bottom": {
-      keyFrames = [
-        { transform: "translate(-50%, 100%)" },
-        { transform: "translate(-50%, 0)" }
-      ];
-      positionStyle = SnackbarPositionStyles.Bottom;
-      break;
-    };
-
-    case "bottom-left": {
-      positionStyle = SnackbarPositionStyles.BottomLeft;
-      break;
-    };
-
-    case "bottom-right": {
-      moveFrom = "Right";
-      positionStyle = SnackbarPositionStyles.BottomRight;
-      break;
-    };
-
-    default: {
-      moveFrom = "Right";
-      positionStyle = SnackbarPositionStyles.TopRight;
-      break;
-    }
-  }
+  const { positionStyle, animation } = SnackbarUtils.getDefaultConfigures(props.item.position!);
 
   let headerBackgroundColor = (data.color && (
     data.color === "info" || data.color === "success" || data.color === "warning" || data.color === "error"
-  )) ? { backgroundColor: ColorValues[data.color] } : undefined;
+  )) ? { backgroundColor: ColorValues[data.color] } : data.color ? { backgroundColor: data.color } : undefined;
 
   const styles = {
     closeBtn: {
@@ -86,10 +43,10 @@ export default function Snackbar(props: ModalItemProps) {
 
   /**
    * RUN ONE TIME
-   * After element is rendered, run animation.
+   * Run animation after element is rendered with its ref.
    */
   React.useEffect(() => {
-    MoveAnim.From(snackbarRef.current!, keyFrames, moveFrom);
+    MoveAnim.From(snackbarRef.current!, animation.keyFrames, animation.moveFrom);
   }, []);
 
   return (
@@ -99,7 +56,7 @@ export default function Snackbar(props: ModalItemProps) {
       style={styles.container}
     >
       {/* Header of Snackbar */}
-      <div className="tunangn-snackbar-header" style={SnackbarComponentsStyle.Header}>
+      <div className="tunangn-snackbar-header" style={styles.header}>
         {
           typeof data.title === "string" && data.title
           ? <p style={FontStyles.FwBold}>{data.title}</p>

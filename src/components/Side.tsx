@@ -3,9 +3,10 @@ import * as React from 'react';
 
 import { MoveAnim, MoveFrom } from '../animations/move';
 
+import { SideUtils } from '../utils/side';
 import { ElementUtils } from '../utils/element';
 
-import { SideComponentsStyle, SidePlaceOnStyles } from '../styles/side';
+import { SideComponentsStyle } from '../styles/side';
 import { ButtonStyles } from '../styles/bases/button';
 import { FontStyles } from '../styles/bases/font';
 import { SpacingStyles } from '../styles/bases/spacing';
@@ -19,22 +20,8 @@ export default function Side(props: ModalItemProps) {
   const data: DefaultSideReceivedData = props.item.getData();
   const sideRef = React.useRef<HTMLDivElement>(null);
 
-  let moveFrom: MoveFrom;
-  let placeOnStyle;
-
-  switch(props.item.placeOn) {
-    case "right": {
-      moveFrom = "Right";
-      placeOnStyle = SidePlaceOnStyles.Right;
-      break;
-    };
-
-    default: {
-      moveFrom = "Left";
-      placeOnStyle = SidePlaceOnStyles.Left;
-      break;
-    }
-  }
+  // Get place-on style to configure Side.
+  const { placeOnStyle, animation } = SideUtils.getDefaultConfigures(props.item.placeOn!);
 
   const styles = {
     closeBtn: {
@@ -49,10 +36,10 @@ export default function Side(props: ModalItemProps) {
 
   /**
    * RUN ONE TIME
-   * After side is added, run animation
+   * Run animation after element is rendered with its ref.
    */
   React.useEffect(() => {
-    MoveAnim.From(sideRef.current!, undefined, moveFrom);
+    MoveAnim.From(sideRef.current!, animation.keyFrames, animation.moveFrom);
   }, []);
 
   return (

@@ -7,4 +7,4 @@ You can install it by:
 npm install tunangn-react-modal
 ```
 
-## How to use
+## How to use?

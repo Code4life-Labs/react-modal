@@ -1,4 +1,7 @@
-import { MITypes, MIResult, ModalItem, PublicModalItemProps } from "tunangn-modal";
+import {
+  MIResult,
+  PublicModalItemProps
+} from "tunangn-modal";
 
 /**
  * **ElementUtils**
