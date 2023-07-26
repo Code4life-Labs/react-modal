@@ -17,15 +17,27 @@ import {
   MIMOpenRemoveOptions
 } from "tunangn-modal";
 
+import { createModalItem } from '../creators/createModalItem';
+
 import DefaultDialog from '../components/Dialog';
 import DefaultSide from '../components/Side';
 import DefaultSnackbar from '../components/Snackbar';
 
 import { ElementUtils } from '../utils/element';
+import { SideUtils } from '../utils/side';
+import { SnackbarUtils } from '../utils/snackbar';
 
 import { ModalStyles } from '../styles/modal';
+import { DialogComponentsStyle } from '../styles/dialog';
+import { SideComponentsStyle } from '../styles/side';
+import { SnackbarComponentsStyle } from '../styles/snackbar';
 
-import { RMAddItemOptions } from '../types';
+import {
+  RMAddItemOptions,
+  ModalItemProps,
+  CustomizedModalItemProps,
+  CreateModalItemWrappedComponentProps
+} from '../types';
 
 export class ReactModal {
   modal!: Modal<HTMLDivElement>;
@@ -127,13 +139,34 @@ export class ReactModal {
   addItem(options: RMAddItemOptions) {
     try {
       let item;
+
       switch(options.type) {
         case "dialog": {
           item = new Dialog<JSX.Element>({
             name: options.name,
             build: function(builder) {
               builder.buildCompoment("container", (close, item) => {
-                return options.element? options.element({close, item}) : <DefaultDialog close={close} item={item} />
+                let Element;
+
+                if(options.element) {
+                  let configurations = {
+                    getContainerStyle: function(style?: React.CSSProperties) {
+                      return ElementUtils.mergeStyles(
+                        DialogComponentsStyle.Container as Partial<CSSStyleDeclaration>,
+                        style as Partial<CSSStyleDeclaration>
+                      )
+                    }
+                  };
+                  Element = options.element as ((props: CustomizedModalItemProps) => JSX.Element);
+                  return <Element close={close} item={item} configurations={configurations} />
+                };
+
+                Element = createModalItem(DefaultDialog, {
+                  className: options.className,
+                  clearDefaultInlineStyle: options.clearDefaultInlineStyle
+                } as CreateModalItemWrappedComponentProps);
+
+                return <Element close={close} item={item} />
               })
               return true;
             }
@@ -147,7 +180,32 @@ export class ReactModal {
             placeOn: options.placeOn,
             build: function(builder) {
               builder.buildCompoment("container", (close, item) => {
-                return options.element? options.element({close, item}) : <DefaultSide close={close} item={item} />
+                let Element;
+
+                if(options.element) {
+                  let { placeOnStyle } = SideUtils.getDefaultConfigures(item.placeOn!);
+                  let configurations = {
+                    getContainerStyle: function(style?: React.CSSProperties) {
+                      return ElementUtils.mergeStyles(
+                        SideComponentsStyle.Container as Partial<CSSStyleDeclaration>,
+                        placeOnStyle as Partial<CSSStyleDeclaration>,
+                        style as Partial<CSSStyleDeclaration>
+                      )
+                    },
+                    runAnimation: function(ref: HTMLElement) {
+                      SideUtils.runDefaultAnim(ref, item.placeOn!);
+                    }
+                  };
+                  Element = options.element as ((props: CustomizedModalItemProps) => JSX.Element);
+                  return <Element close={close} item={item} configurations={configurations} />
+                };
+
+                Element = createModalItem(DefaultSide, {
+                  className: options.className,
+                  clearDefaultInlineStyle: options.clearDefaultInlineStyle
+                } as CreateModalItemWrappedComponentProps);
+
+                return <Element close={close} item={item} />
               })
               return true;
             }
@@ -162,7 +220,32 @@ export class ReactModal {
             duration: options.duration,
             build: function(builder) {
               builder.buildCompoment("container", (close, item) => {
-                return options.element? options.element({close, item}) : <DefaultSnackbar close={close} item={item} />
+                let Element;
+
+                if(options.element) {
+                  let { positionStyle } = SnackbarUtils.getDefaultConfigures(item.position!);
+                  let configurations = {
+                    getContainerStyle: function(style?: React.CSSProperties) {
+                      return ElementUtils.mergeStyles(
+                        SideComponentsStyle.Container as Partial<CSSStyleDeclaration>,
+                        positionStyle as Partial<CSSStyleDeclaration>,
+                        style as Partial<CSSStyleDeclaration>
+                      )
+                    },
+                    runAnimation: function(ref: HTMLElement) {
+                      SnackbarUtils.runDefaultAnim(ref, item.position!);
+                    }
+                  };
+                  Element = options.element as ((props: CustomizedModalItemProps) => JSX.Element);
+                  return <Element close={close} item={item} configurations={configurations} />
+                };
+
+                Element = createModalItem(DefaultSnackbar, {
+                  className: options.className,
+                  clearDefaultInlineStyle: options.clearDefaultInlineStyle
+                } as CreateModalItemWrappedComponentProps);
+
+                return <Element close={close} item={item} />
               })
               return true;
             }

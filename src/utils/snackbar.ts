@@ -75,7 +75,7 @@ function getDefaultConfigures(position: SnackbarPositions) {
  * @param ref HTML Element Ref of React Element (Snackbar).
  * @param position Position of Snackbar.
  */
-function runAnim(ref: HTMLDivElement, position: SnackbarPositions) {
+function runDefaultAnim(ref: HTMLElement, position: SnackbarPositions) {
   let { animation } = getDefaultConfigures(position);
   MoveAnim.From(ref, animation.keyFrames, animation.moveFrom);
 };
@@ -98,6 +98,6 @@ function getDefaultContainerStyle(position: SnackbarPositions) {
  */
 export const SnackbarUtils = {
   getDefaultConfigures,
-  runAnim,
+  runDefaultAnim,
   getDefaultContainerStyle
 }

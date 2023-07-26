@@ -12,7 +12,8 @@ import {
   DefaultDialogReceivedData,
   DefaultSideReceivedData,
   DefaultSnackbarReceivedData,
-  ModalItemProps
+  ModalItemProps,
+  CustomizedModalItemProps
 } from "./types";
 
 // Import default functions and default TunangnModal
@@ -22,7 +23,7 @@ import {
   dialog,
   side,
   snackbar
-} from './items'
+} from './items';
 
 export {
   createModal,
@@ -35,5 +36,5 @@ export {
   DefaultDialogReceivedData,
   DefaultSideReceivedData,
   DefaultSnackbarReceivedData,
-  ModalItemProps
+  CustomizedModalItemProps
 }

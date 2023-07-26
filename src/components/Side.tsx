@@ -13,10 +13,11 @@ import { SpacingStyles } from '../styles/bases/spacing';
 
 import {
   ModalItemProps,
-  DefaultSideReceivedData
+  DefaultSideReceivedData,
+  CreateModalItemWrappedComponentProps
 } from '../types'
 
-export default function Side(props: ModalItemProps) {
+export default function Side(props: CreateModalItemWrappedComponentProps) {
   const data: DefaultSideReceivedData = props.item.getData();
   const sideRef = React.useRef<HTMLDivElement>(null);
 

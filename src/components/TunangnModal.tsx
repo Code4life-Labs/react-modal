@@ -147,6 +147,8 @@ export default function TunangnModal(props: ModalContainerProps) {
         position: itemOptions.position,
         duration: itemOptions.duration,
         canAutoClose: itemOptions.canAutoClose,
+        clearDefaultInlineStyle: itemOptions.clearDefaultInlineStyle,
+        className: itemOptions.className,
         element: itemOptions.element
       });
     }

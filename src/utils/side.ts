@@ -47,7 +47,7 @@ function getDefaultConfigures(placeOn: SidePlaces) {
  * @param ref HTML Element Ref of React Element (Side).
  * @param placeOn
  */
-function runAnim(ref: HTMLDivElement, placeOn: SidePlaces) {
+function runDefaultAnim(ref: HTMLElement, placeOn: SidePlaces) {
   let { animation } = getDefaultConfigures(placeOn);
   MoveAnim.From(ref, animation.keyFrames, animation.moveFrom);
 };
@@ -70,6 +70,6 @@ function getDefaultContainerStyle(placeOn: SidePlaces) {
  */
 export const SideUtils = {
   getDefaultConfigures,
-  runAnim,
+  runDefaultAnim,
   getDefaultContainerStyle
 }

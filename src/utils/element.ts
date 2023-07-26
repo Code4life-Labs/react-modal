@@ -29,6 +29,7 @@ function mergeStyles(...styles: Array<Partial<CSSStyleDeclaration>>) {
   let merged = {};
 
   for(let style of styles) {
+    if(!style) continue;
     if(typeof style === "object" && Array.isArray(style)) {
       merged = {...merged, ...mergeStyles(...style)};
     } else {
