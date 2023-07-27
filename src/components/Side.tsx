@@ -12,7 +12,6 @@ import { FontStyles } from '../styles/bases/font';
 import { SpacingStyles } from '../styles/bases/spacing';
 
 import {
-  ModalItemProps,
   DefaultSideReceivedData,
   CreateModalItemWrappedComponentProps
 } from '../types'
@@ -20,6 +19,7 @@ import {
 export default function Side(props: CreateModalItemWrappedComponentProps) {
   const data: DefaultSideReceivedData = props.item.getData();
   const sideRef = React.useRef<HTMLDivElement>(null);
+  const className = props.className ? props.className : "tunangn-side";
 
   // Get place-on style to configure Side.
   const { placeOnStyle, animation } = SideUtils.getDefaultConfigures(props.item.placeOn!);
@@ -43,14 +43,47 @@ export default function Side(props: CreateModalItemWrappedComponentProps) {
     MoveAnim.From(sideRef.current!, animation.keyFrames, animation.moveFrom);
   }, []);
 
+  if(props.clearDefaultInlineStyle && props.className) {
+    return (
+      <div
+        className={className}
+        ref={sideRef}
+      >
+        {/* Header of Side */}
+        <div className={className + "-header"}>
+          {
+            typeof data.title === "string" && data.title
+            ? <p>{data.title}</p>
+            : React.isValidElement(data.title) && data.title
+              ? data.title
+              : <p>Tunangn Side</p>
+          }
+          <button style={styles.closeBtn} onClick={() => props.close({ isAgree: false })}></button>
+        </div>
+        {/* Body of Side */}
+        <div className={className + "-body"}>
+          {
+            typeof data.content === "string" && data.content
+            ? <p>{data.content}</p>
+            : React.isValidElement(data.content) && data.content
+              ? data.content
+              : <p>This is the default content of side.</p>
+          }
+        </div>
+        {/* Footer of Side */}
+        <div className={className + "-footer"}></div>
+      </div>
+    )
+  }
+
   return (
     <div
-      className="tunangn-side"
+      className={className}
       style={styles.container}
       ref={sideRef}
     >
       {/* Header of Side */}
-      <div className="tunangn-side-header" style={SideComponentsStyle.Header}>
+      <div className={className + "-header"} style={SideComponentsStyle.Header}>
         {
           typeof data.title === "string" && data.title
           ? <p style={FontStyles.FwBold}>{data.title}</p>
@@ -61,7 +94,7 @@ export default function Side(props: CreateModalItemWrappedComponentProps) {
         <button style={styles.closeBtn} onClick={() => props.close({ isAgree: false })}></button>
       </div>
       {/* Body of Side */}
-      <div className="tunangn-side-body" style={SideComponentsStyle.Body}>
+      <div className={className + "-body"} style={SideComponentsStyle.Body}>
         {
           typeof data.content === "string" && data.content
           ? <p>{data.content}</p>
@@ -71,7 +104,7 @@ export default function Side(props: CreateModalItemWrappedComponentProps) {
         }
       </div>
       {/* Footer of Side */}
-      <div className="tunangn-side-footer" style={SideComponentsStyle.Footer}></div>
+      <div className={className + "-footer"} style={SideComponentsStyle.Footer}></div>
     </div>
   )
 }

@@ -12,11 +12,15 @@ import { ColorValues } from '../styles/bases/variables';
 import { MoveAnim, MoveFrom } from '../animations/move';
 
 
-import { ModalItemProps, DefaultSnackbarReceivedData } from '../types';
+import {
+  DefaultSnackbarReceivedData,
+  CreateModalItemWrappedComponentProps
+} from '../types';
 
-export default function Snackbar(props: ModalItemProps) {
+export default function Snackbar(props: CreateModalItemWrappedComponentProps) {
   const data: DefaultSnackbarReceivedData = props.item.getData();
   const snackbarRef = React.useRef<HTMLDivElement>(null);
+  const className = props.className ? props.className : "tunangn-snackbar";
 
   const { positionStyle, animation } = SnackbarUtils.getDefaultConfigures(props.item.position!);
 
@@ -49,14 +53,48 @@ export default function Snackbar(props: ModalItemProps) {
     MoveAnim.From(snackbarRef.current!, animation.keyFrames, animation.moveFrom);
   }, []);
 
+  if(props.clearDefaultInlineStyle && props.className) {
+    return (
+      <div
+        ref={snackbarRef}
+        className={className}
+      >
+        {/* Header of Snackbar */}
+        <div className={className + "-header"}>
+          {
+            typeof data.title === "string" && data.title
+            ? <p>{data.title}</p>
+            : React.isValidElement(data.title) && data.title
+              ? data.title
+              : <p>Tunangn Side</p>
+          }
+        </div>
+        {/* Body of Snackbar */}
+        <div className={className + "-body"}>
+          {
+            typeof data.content === "string" && data.content
+            ? <p>{data.content}</p>
+            : React.isValidElement(data.content) && data.content
+              ? data.content
+              : <p>This is the default content of side.</p>
+          }
+        </div>
+        {/* Footer of Snackbar */}
+        <div className={className + "-footer"}>
+          <button style={styles.closeBtn} onClick={() => props.close({ isAgree: false })}></button>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div
       ref={snackbarRef}
-      className="tunangn-snackbar"
+      className={className}
       style={styles.container}
     >
       {/* Header of Snackbar */}
-      <div className="tunangn-snackbar-header" style={styles.header}>
+      <div className={className + "-header"} style={styles.header}>
         {
           typeof data.title === "string" && data.title
           ? <p style={FontStyles.FwBold}>{data.title}</p>
@@ -66,7 +104,7 @@ export default function Snackbar(props: ModalItemProps) {
         }
       </div>
       {/* Body of Snackbar */}
-      <div className="tunangn-snackbar-body" style={SnackbarComponentsStyle.Body}>
+      <div className={className + "-body"} style={SnackbarComponentsStyle.Body}>
         {
           typeof data.content === "string" && data.content
           ? <p>{data.content}</p>
@@ -76,7 +114,7 @@ export default function Snackbar(props: ModalItemProps) {
         }
       </div>
       {/* Footer of Snackbar */}
-      <div className="tunangn-snackbar-footer" style={SnackbarComponentsStyle.Footer}>
+      <div className={className + "-footer"} style={SnackbarComponentsStyle.Footer}>
         <button style={styles.closeBtn} onClick={() => props.close({ isAgree: false })}></button>
       </div>
     </div>

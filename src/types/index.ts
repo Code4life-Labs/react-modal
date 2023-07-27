@@ -71,36 +71,39 @@ interface CreateItemOptions {
   /**
    * __Only for Snackbar__
    * 
-   * How long does snackbar last?
+   * How long does snackbar last? If you want to disable the auto-close behaviour, you
+   * can assign `null` to this option.
    */
-  duration?: number,
+  duration?: number | null,
   /**
-   * Clear default inline stlye.
+   * Clear default inline stlyes. You can use the default class name to style the UI component
+   * for Modal Item.
    * 
-   * __Note__: This prop will not work if you use `element` as React Component.
+   * __Note__:
+   * - This option will not work if you use `element` as Function Component.
+   * - Don't recommend.
+   * - Using this option if you want to write css to the default class name.
    */
   clearDefaultInlineStyle?: boolean,
   /**
    * Class name of item's container. This will be based class name for other ui element components.
+   * You don't need `clearDefaultInlineStyle` to clear the default inline style, because the default inline
+   * style will be cleared if `className` option is assigned.
    * 
    * For example:
    * `className = "myDialog"` => `header's class name is myDialog-header`
    * 
    * __Note__:
-   * - This prop will not work if you use `element` as React Component.
-   * - Using this prop if you just want to modify UI Element.
+   * - This option will not work if you use `element` as Function Component.
+   * - Using this option if you just want to modify UI Element.
+   * - Using this option if ony you have your own css styles.
    */
   className?: string,
   /**
-   * __Only for Snackbar__
-   * 
-   * Can snackbar close itself after a period time? `duration` will not work if this property is set.
-   */
-  canAutoClose?: boolean,
-  /**
-   * Use this prop to customize Element. Its can be:
-   * - __Function component__: will override the default UI element. You can use some util function
-   * to perform the default behaviour of element. Or you can build your own.
+   * Use this option to customize Element. Its can be:
+   * - __Function component__: will override the default UI element. You can use some util functions
+   * to perform the default behaviour of element or ui's style of element (by `configurations` in `props`).
+   * Or you can build your own.
    * - __undefined__: will use the default UI element.
    */
   element?: ((props: CustomizedModalItemProps) => JSX.Element)
@@ -123,12 +126,20 @@ export enum MIUIStyleNameEnum {
 export interface WrappedModalContainerProps {
   /**
    * Class name of modal's container.
+   * 
+   * I don't recommend you to change the class name of Modal Container.
    */
   className?: string,
   /**
-   * List of Modal Item use to assign.
+   * List of your Modal Item options. These options will be use around the default
+   * Modal Item, except `element` option. `element` will be replace the default Modal Item Element, but
+   * you can use its configurations (getContainerStyle and runAnimation)
+   * 
+   * If you use `element`, you just need `name`, `type` (required) and `duration` (only for snackbar).
+   * 
+   * __Note__: If you want to apply change, you need to reload the browser.
    */
-  items?: {[key: string]: CreateItemOptions},
+  items?: {[key: string]: CreateItemOptions}
 }
 
 export interface ModalContainerProps extends WrappedModalContainerProps {

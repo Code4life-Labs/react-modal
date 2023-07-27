@@ -7,8 +7,8 @@ import { FontStyles } from '../styles/bases/font';
 import { SpacingStyles } from '../styles/bases/spacing';
 
 import {
-  ModalItemProps,
-  DefaultDialogReceivedData
+  DefaultDialogReceivedData,
+  CreateModalItemWrappedComponentProps
 } from '../types';
 
 /**
@@ -16,8 +16,9 @@ import {
  * @param props 
  * @returns 
  */
-export default function Dialog(props: ModalItemProps) {
+export default function Dialog(props: CreateModalItemWrappedComponentProps) {
   const data: DefaultDialogReceivedData = props.item.getData();
+  const className = props.className ? props.className : "tunangn-dialog";
 
   const styles = React.useRef({
     closeBtn: {
@@ -37,12 +38,63 @@ export default function Dialog(props: ModalItemProps) {
     }
   });
 
-  console.log("Dialog's data: ", data);
+  if(props.clearDefaultInlineStyle && props.className) {
+    return (
+      <div className={className}>
+        {/* Header of Dialog */}
+        <div className={className + "-header"}>
+          {
+            typeof data.title === "string" && data.title
+            ? <p>{data.title}</p>
+            : React.isValidElement(data.title) && data.title
+              ? data.title
+              : <p>Tunangn Dialog</p>
+          }
+          <button style={styles.current.closeBtn} onClick={() => props.close({ isAgree: false })}></button>
+        </div>
+        {/* Body of Dialog */}
+        <div className={className + "-body"}>
+          {
+            typeof data.content === "string" && data.content
+            ? <p>{data.content}</p>
+            : React.isValidElement(data.content) && data.content
+              ? data.content
+              : <p>This is the default content of dialog.</p>
+          }
+        </div>
+        {/* Footer of Dialog */}
+        <div className={className + "-footer"}>
+          {
+            data.cancelBtnLabel !== null 
+            &&
+            <button onClick={() => props.close({ isAgree: false })}>
+              {
+                (typeof data.cancelBtnLabel === "string" || React.isValidElement(data.cancelBtnLabel)) && data.cancelBtnLabel
+                ? data.cancelBtnLabel
+                : "Cancel"
+              }
+            </button>
+          }
+          {
+            data.agreeBtnLabel !== null
+            &&
+            <button onClick={() => props.close({ isAgree: true })}>
+              {
+                (typeof data.agreeBtnLabel === "string" || React.isValidElement(data.agreeBtnLabel)) && data.agreeBtnLabel
+                ? data.agreeBtnLabel
+                : "Ok"
+              }
+            </button>
+          }
+        </div>
+      </div>
+    )
+  }
 
   return (
-    <div className="tunangn-dialog" style={DialogComponentsStyle.Container}>
+    <div className={className} style={DialogComponentsStyle.Container}>
       {/* Header of Dialog */}
-      <div className="tunangn-dialog-header" style={DialogComponentsStyle.Header}>
+      <div className={className + "-header"} style={DialogComponentsStyle.Header}>
         {
           typeof data.title === "string" && data.title
           ? <p style={FontStyles.FwBold}>{data.title}</p>
@@ -53,7 +105,7 @@ export default function Dialog(props: ModalItemProps) {
         <button style={styles.current.closeBtn} onClick={() => props.close({ isAgree: false })}></button>
       </div>
       {/* Body of Dialog */}
-      <div className="tunangn-dialog-body" style={DialogComponentsStyle.Body}>
+      <div className={className + "-body"} style={DialogComponentsStyle.Body}>
         {
           typeof data.content === "string" && data.content
           ? <p>{data.content}</p>
@@ -63,7 +115,7 @@ export default function Dialog(props: ModalItemProps) {
         }
       </div>
       {/* Footer of Dialog */}
-      <div className="tunangn-dialog-footer" style={DialogComponentsStyle.Footer}>
+      <div className={className + "-footer"} style={DialogComponentsStyle.Footer}>
         {
           data.cancelBtnLabel !== null 
           &&

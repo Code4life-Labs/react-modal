@@ -253,6 +253,7 @@ export class ReactModal {
           break;
         }
       }
+
       this.modal.registerItem(options.name, item!);
       return true;
     } catch (error: any) {

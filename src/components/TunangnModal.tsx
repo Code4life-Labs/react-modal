@@ -146,7 +146,6 @@ export default function TunangnModal(props: ModalContainerProps) {
         placeOn: itemOptions.placeOn,
         position: itemOptions.position,
         duration: itemOptions.duration,
-        canAutoClose: itemOptions.canAutoClose,
         clearDefaultInlineStyle: itemOptions.clearDefaultInlineStyle,
         className: itemOptions.className,
         element: itemOptions.element
