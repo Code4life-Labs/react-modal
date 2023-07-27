@@ -38,7 +38,7 @@ export default function Dialog(props: CreateModalItemWrappedComponentProps) {
     }
   });
 
-  if(props.clearDefaultInlineStyle && props.className) {
+  if(props.clearDefaultInlineStyle || props.className) {
     return (
       <div className={className}>
         {/* Header of Dialog */}

@@ -185,8 +185,8 @@ export default function TunangnModal(props: ModalContainerProps) {
   return React.useMemo(() => (
     <div
       ref={modalContainerRef}
-      className={modalData.current.className}
-      style={modalData.current.style}
+      className={props.className ? props.className : modalData.current.className}
+      style={props.className ? {} : modalData.current.style}
     >
       {
         miuiElementKeys.map(key => {

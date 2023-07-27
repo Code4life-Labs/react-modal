@@ -16,38 +16,38 @@ import {
 } from "./types";
 
 // Create default Modal React Element and default open function.
-const [TunangnModal, openTunangnMI] = createModal();
+const [TunangnModal, openTMI] = createModal();
 
 /**
  * Use this function to open default __`dialog`__. You can pass data to this function.
- * @param options 
+ * @param data Assign data to modify all contents of default `Dialog`.
  */
 function dialog(data: DefaultDialogReceivedData) {
   if(!ReactModal.isTunangnModalCreated) return Promise.resolve<MIResult>({ isAgree: false });
-  return openTunangnMI(DEFAULT_DIALOG_NAME, data);
+  return openTMI(DEFAULT_DIALOG_NAME, data);
 }
 
 /**
  * Use this function to open default __`side`__. You can pass data to this function.
- * @param options 
+ * @param data Assign data to modify all contents default of `Side`.
  */
 function side(data: DefaultSideReceivedData) {
   if(!ReactModal.isTunangnModalCreated) return Promise.resolve<MIResult>({ isAgree: false });
-  return openTunangnMI(DEFAULT_SIDE_NAME, data);
+  return openTMI(DEFAULT_SIDE_NAME, data);
 }
 
 /**
  * Use this function to open default __`snackbar`__. You can pass data to this function.
- * @param options 
+ * @param data Assign data to modify all contents of default `Snackbar`.
  */
 function snackbar(data: DefaultSnackbarReceivedData) {
   if(!ReactModal.isTunangnModalCreated) return Promise.resolve<MIResult>({ isAgree: false });
-  return openTunangnMI(DEFAULT_SNACKBAR_NAME, data);
+  return openTMI(DEFAULT_SNACKBAR_NAME, data);
 }
 
 export {
   TunangnModal,
-  openTunangnMI,
+  openTMI,
   dialog,
   side,
   snackbar

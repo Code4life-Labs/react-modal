@@ -149,7 +149,7 @@ export class ReactModal {
                 let Element;
 
                 if(options.element) {
-                  let configurations = {
+                  let utils = {
                     getContainerStyle: function(style?: React.CSSProperties) {
                       return ElementUtils.mergeStyles(
                         DialogComponentsStyle.Container as Partial<CSSStyleDeclaration>,
@@ -158,7 +158,7 @@ export class ReactModal {
                     }
                   };
                   Element = options.element as ((props: CustomizedModalItemProps) => JSX.Element);
-                  return <Element close={close} item={item} configurations={configurations} />
+                  return <Element close={close} item={item} utils={utils} />
                 };
 
                 Element = createModalItem(DefaultDialog, {
@@ -184,7 +184,7 @@ export class ReactModal {
 
                 if(options.element) {
                   let { placeOnStyle } = SideUtils.getDefaultConfigures(item.placeOn!);
-                  let configurations = {
+                  let utils = {
                     getContainerStyle: function(style?: React.CSSProperties) {
                       return ElementUtils.mergeStyles(
                         SideComponentsStyle.Container as Partial<CSSStyleDeclaration>,
@@ -197,7 +197,7 @@ export class ReactModal {
                     }
                   };
                   Element = options.element as ((props: CustomizedModalItemProps) => JSX.Element);
-                  return <Element close={close} item={item} configurations={configurations} />
+                  return <Element close={close} item={item} utils={utils} />
                 };
 
                 Element = createModalItem(DefaultSide, {
@@ -224,7 +224,7 @@ export class ReactModal {
 
                 if(options.element) {
                   let { positionStyle } = SnackbarUtils.getDefaultConfigures(item.position!);
-                  let configurations = {
+                  let utils = {
                     getContainerStyle: function(style?: React.CSSProperties) {
                       return ElementUtils.mergeStyles(
                         SideComponentsStyle.Container as Partial<CSSStyleDeclaration>,
@@ -237,7 +237,7 @@ export class ReactModal {
                     }
                   };
                   Element = options.element as ((props: CustomizedModalItemProps) => JSX.Element);
-                  return <Element close={close} item={item} configurations={configurations} />
+                  return <Element close={close} item={item} utils={utils} />
                 };
 
                 Element = createModalItem(DefaultSnackbar, {

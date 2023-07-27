@@ -32,7 +32,7 @@ export interface CustomizedModalItemProps extends ModalItemProps {
    * 
    * If you build your own Modal Item, you should use this properties.
    */
-  configurations: {
+  utils: {
     /**
      * Use to get container style. You can pass your custom style to this function, your style
      * will override the default one.
@@ -95,8 +95,7 @@ interface CreateItemOptions {
    * 
    * __Note__:
    * - This option will not work if you use `element` as Function Component.
-   * - Using this option if you just want to modify UI Element.
-   * - Using this option if ony you have your own css styles.
+   * - Using this option if you just want to modify UI Element with your own css.
    */
   className?: string,
   /**

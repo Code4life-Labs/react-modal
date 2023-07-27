@@ -43,7 +43,7 @@ export default function Side(props: CreateModalItemWrappedComponentProps) {
     MoveAnim.From(sideRef.current!, animation.keyFrames, animation.moveFrom);
   }, []);
 
-  if(props.clearDefaultInlineStyle && props.className) {
+  if(props.clearDefaultInlineStyle || props.className) {
     return (
       <div
         className={className}

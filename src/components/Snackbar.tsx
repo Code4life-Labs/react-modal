@@ -53,7 +53,7 @@ export default function Snackbar(props: CreateModalItemWrappedComponentProps) {
     MoveAnim.From(snackbarRef.current!, animation.keyFrames, animation.moveFrom);
   }, []);
 
-  if(props.clearDefaultInlineStyle && props.className) {
+  if(props.clearDefaultInlineStyle || props.className) {
     return (
       <div
         ref={snackbarRef}
