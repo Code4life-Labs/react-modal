@@ -70,8 +70,6 @@ export default function Side(props: CreateModalItemWrappedComponentProps) {
               : <p>This is the default content of side.</p>
           }
         </div>
-        {/* Footer of Side */}
-        <div className={className + "-footer"}></div>
       </div>
     )
   }
@@ -103,8 +101,6 @@ export default function Side(props: CreateModalItemWrappedComponentProps) {
             : <p>This is the default content of side.</p>
         }
       </div>
-      {/* Footer of Side */}
-      <div className={className + "-footer"} style={SideComponentsStyle.Footer}></div>
     </div>
   )
 }

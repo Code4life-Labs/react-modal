@@ -41,6 +41,10 @@ import {
 
 export class ReactModal {
   modal!: Modal<HTMLDivElement>;
+  /**
+   * Use white background or black background?
+   */
+  isWhiteBackground?: boolean;
 
   private _isInit!: boolean;
   static isTunangnModalCreated: boolean = false;
@@ -90,6 +94,8 @@ export class ReactModal {
       return new Promise<MIResult>((resolve) => {
         setTimeout(() => {
           let item = that.modal.getItem(name)!;
+          let backgroundColorStyle = this.isWhiteBackground ? ModalStyles.TranparentWhiteBG : ModalStyles.TranparentBlackBG;
+
           // Set data for item.
           item.setData(data);
 
@@ -98,12 +104,18 @@ export class ReactModal {
 
           switch(item.type) {
             case "dialog": {
-              ElementUtils.addStyle(that.modal.container!, ModalStyles.TranparentBlackBG as Partial<CSSStyleDeclaration>);
+              ElementUtils.addStyle(
+                that.modal.container!,
+                backgroundColorStyle as Partial<CSSStyleDeclaration>
+              );
               break;
             };
 
             case "side": {
-              ElementUtils.addStyle(that.modal.container!, ModalStyles.TranparentBlackBG as Partial<CSSStyleDeclaration>);
+              ElementUtils.addStyle(
+                that.modal.container!,
+                backgroundColorStyle as Partial<CSSStyleDeclaration>
+              );
               break;
             };
 

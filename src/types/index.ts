@@ -124,6 +124,10 @@ export enum MIUIStyleNameEnum {
 
 export interface WrappedModalContainerProps {
   /**
+   * Will white background or black background be used?
+   */
+  canUseWhiteBG?: boolean,
+  /**
    * Class name of modal's container.
    * 
    * I don't recommend you to change the class name of Modal Container.
@@ -154,7 +158,13 @@ interface DefaultMIReceivedData {
 }
 
 export interface DefaultDialogReceivedData extends DefaultMIReceivedData {
+  /**
+   * Use to set label for cancel button of dialog. You can hide this button by assign `null`.
+   */
   cancelBtnLabel?: string | JSX.Element | null,
+  /**
+   * Use to set label for agree button of dialog. You can hide this button by assign `null`.
+   */
   agreeBtnLabel?: string | JSX.Element | null
 }
 
@@ -164,7 +174,7 @@ export interface DefaultSnackbarReceivedData extends DefaultMIReceivedData {
   /**
    * Color for Snackbar
    */
-  color?: "info" | "success" | "warning" | "error" | string
+  color?: string
 }
 
 export interface CreateModalItemWrappedComponentProps extends ModalItemProps {

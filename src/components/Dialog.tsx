@@ -33,7 +33,7 @@ export default function Dialog(props: CreateModalItemWrappedComponentProps) {
     cancelBtn: {
       ...ButtonStyles.Btn,
       ...ButtonStyles.BtnTransparent20,
-      ...SpacingStyles.Me1,
+      ...(data.agreeBtnLabel === null ? {} : SpacingStyles.Me1),
       ...ButtonStyles.BtnBorder
     }
   });

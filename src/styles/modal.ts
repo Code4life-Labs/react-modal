@@ -22,6 +22,6 @@ export const ModalStyles: {[key in ModalStyleNameEnum]: React.CSSProperties} = {
   },
 
   [ModalStyleNameEnum.TranparentWhiteBG]: {
-    backgroundColor: `rgba(${ColorValues.rgbBackground}, .2)`
+    backgroundColor: "rgba(241, 241, 241, .64)"
   }
 }

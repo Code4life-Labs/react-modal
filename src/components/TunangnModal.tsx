@@ -152,6 +152,9 @@ export default function TunangnModal(props: ModalContainerProps) {
       });
     }
 
+    // Setup properties for modal.
+    props.modalManager.isWhiteBackground = props.canUseWhiteBG;
+
     props.modalManager.modal.container = modalContainerRef.current!;
   }, []);
 

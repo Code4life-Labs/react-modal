@@ -49,6 +49,6 @@
   },
   "homepage": "https://github.com/NguyenAnhTuan1912/tunangn-react-modal",
   "dependencies": {
-    "tunangn-modal": "^1.0.1"
+    "tunangn-modal": "^1.0.2"
   }
 }
