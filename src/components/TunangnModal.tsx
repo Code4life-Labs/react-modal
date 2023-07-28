@@ -93,8 +93,6 @@ export default function TunangnModal(props: ModalContainerProps) {
     // Set up _append function for modal.
     props.modalManager.setAppendFn((options: MIMOpenAppendOptions) => {
       setItems(prevState => {
-        console.log("Open: ", options.tempUID);
-        console.log("Its info: ", options);
         let attributes: any = {
           type: options._ItemAttributes.type
         };
@@ -138,7 +136,6 @@ export default function TunangnModal(props: ModalContainerProps) {
 
     // Add and Create Modal Item
     for(let itemName of itemNames) {
-      // console.log("Assigned Item: ", items[itemName]);
       let itemOptions = items[itemName];
       props.modalManager.addItem({
         name: itemName,
@@ -179,7 +176,6 @@ export default function TunangnModal(props: ModalContainerProps) {
           lastItem.close({ isAgree: false });
         }, lastItem.attributes.duration);
       };
-      console.log("New Item Added!!!");
     }
 
     modalData.current.N = currentItemsLength;

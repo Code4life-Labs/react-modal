@@ -1,6 +1,6 @@
 {
   "name": "tunangn-react-modal",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Use to show message by using Dialog, snackbar or to show side in React",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
