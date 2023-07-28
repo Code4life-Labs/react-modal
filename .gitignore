@@ -8,3 +8,4 @@ dist
 webpack.config.js
 rollup.config.js
 babel.config.json
+tsconfig.json
