@@ -96,6 +96,8 @@ export class ReactModal {
           let item = that.modal.getItem(name)!;
           let backgroundColorStyle = this.isWhiteBackground ? ModalStyles.TranparentWhiteBG : ModalStyles.TranparentBlackBG;
 
+          if(item.type !== "snack-bar") document.body.style.overflow = "hidden";
+
           // Set data for item.
           item.setData(data);
 

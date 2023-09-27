@@ -118,16 +118,22 @@ export default function TunangnModal(props: ModalContainerProps) {
         let itemUIDs = Object.keys(prevState);
 
         // If there aren't items left, reset style of modal container element.
+        // Or style of document.body
         if(itemUIDs.length === 0) {
           props.modalManager.modal.container!.style.backgroundColor = "";
           props.modalManager.modal.container!.style.pointerEvents = "";
           props.modalManager.modal.container!.style.display = "none";
+
+          // Reset style.overflow of body
+          document.body.style.overflow = "";
         }
 
         /**
          * If there aren't any items left but snackbar, remove background.
          */
         if(itemUIDs.every(name => name.startsWith("snack-bar"))) {
+          // Reset style.overflow of body
+          document.body.style.overflow = "";
           props.modalManager.modal.container!.style.backgroundColor = "";
         }
         return {...prevState};
