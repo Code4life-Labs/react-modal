@@ -75,7 +75,8 @@ function From(
   // Set default options if options is undefined or options hasn't default properties.
   options = setDefaultOptions(options);
 
-  element.animate(keyframes, options);
+  // If has `animate` method, run the animation.
+  if(element.animate) element.animate(keyframes, options);
 };
 
 export const MoveAnim = {

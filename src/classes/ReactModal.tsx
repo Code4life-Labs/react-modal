@@ -241,7 +241,7 @@ export class ReactModal {
                   let utils = {
                     getContainerStyle: function(style?: React.CSSProperties) {
                       return ElementUtils.mergeStyles(
-                        SideComponentsStyle.Container as Partial<CSSStyleDeclaration>,
+                        SnackbarComponentsStyle.Container as Partial<CSSStyleDeclaration>,
                         positionStyle as Partial<CSSStyleDeclaration>,
                         style as Partial<CSSStyleDeclaration>
                       )
